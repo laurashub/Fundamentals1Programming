@@ -25,8 +25,9 @@ def unpack_tar(target_path):
 	return pdb_names
 
 def print_names(pdb_names):
-	for name in sorted(list(pdb_names)):
-		print(name)
+	print("PDB Codes: ", end="")
+	print(", ".join(sorted(list(pdb_names))))
+
 
 # http://www.rbvi.ucsf.edu/Outreach/PythonBootCamp2019/modules/oop/top500H.tgz
 
