@@ -19,10 +19,9 @@ def download_tar(tar_base, tar_name, target_path):
 def unpack_tar(target_path):
 	pdb_names = set()
 	tf = tarfile.open(name=target_path)
-	for name in tf.getnames():
+	for name in tf.getnames()[1:]:
 		n = name.split("/")[-1][0:4] #only get 4 letter pdb code
-		if n[0].isdigit():
-			pdb_names.add(n)
+		pdb_names.add(n)
 	return pdb_names
 
 def print_names(pdb_names):
