@@ -37,7 +37,6 @@ def calc_expressions(k, clusters, exmat_df):
 
 def avg_expressions(i, cell_cluster, exmat_df, result_df):
 	cluster_df = exmat_df.loc[:,cell_cluster]
-	#df['% Age 18-65'] = df.apply(lambda row:calculate_adults(row),axis=1)
 	result_df[i] = cluster_df.mean(axis=1)
 
 #main
@@ -46,8 +45,7 @@ clusters = "E-MTAB-7365.clusters.csv"#cell cluster assignments for various value
 
 exmat_df = read_csv(exmat, 0)
 clusters_df = read_csv(clusters, False)
-#print(exmat_df.head())
-#print(clusters_df.head())
+
 k_index, k = find_k(clusters_df)
 clusters = cluster_cells(k_index, k, clusters_df)
 
