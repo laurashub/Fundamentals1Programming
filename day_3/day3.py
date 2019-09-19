@@ -9,11 +9,10 @@ def read_csv(filename, index):
 
 
 def calc_expressions(k_row, exmat_df):
-	#create blank dataframe
 	k = int(k_row['K'])
 	result_df = pd.DataFrame(columns=range(1, k+1), index=exmat_df.index)
 	for i in range(1, k+1):
-		cells = list(k_row.columns[k_row.isin([i]).all()])[1:]
+		cells = list(k_row.columns[k_row.isin([i]).iloc[0]])[1:]
 		result_df[i] = exmat_df.loc[:,cells].mean(axis=1)
 	return result_df
 
