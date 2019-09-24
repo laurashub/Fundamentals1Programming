@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 
 def fetch_density():
 	url = "https://raw.githubusercontent.com/rlabduke/reference_data/master/Top8000/Top8000_ramachandran_pct_contour_grids/rama8000-general-noGPIVpreP.data"
-	info = {'phi':[], 'psi':[], 'density':[]}
 	r = requests.get(url)
 	with open('contour.data', 'w+') as f:
 		f.write(r.text)
 	densities = pd.read_csv('contour.data', delim_whitespace=True, header=None, comment="#")
+	#densities = densities.pivot(1, 0, 2)
+	#print(densities.head())
 	return densities
 
 def download_pdb(pdb_name):
@@ -36,8 +37,12 @@ def get_phipsi(pdb_code):
 
 def plot(phis, psis, densities):
 	fig, ax = plt.subplots()
-	ax.scatter(phis, psis)
-	ax.tricontour(densities[0], densities[1], densities[2])
+	ax.scatter(phis, psis, s=10)
+	cs = ax.tricontour(densities[0], densities[1], densities[2], levels=[0.0005, 0.0200])
+	ax.clabel(cs)
+	ax.set_xlabel("Φ")
+	ax.set_ylabel("Ψ")
+	#ax.contour(densities)
 	plt.show()
 
 parser = argparse.ArgumentParser(description='Input options to generate ramachandran plot')
