@@ -9,8 +9,6 @@ def fetch_density():
 	with open('contour.data', 'w+') as f:
 		f.write(r.text)
 	densities = pd.read_csv('contour.data', delim_whitespace=True, header=None, comment="#")
-	#densities = densities.pivot(1, 0, 2)
-	#print(densities.head())
 	return densities
 
 def download_pdb(pdb_name):
@@ -29,10 +27,8 @@ def get_phipsi(pdb_code):
 	for model in PDBParser().get_structure(pdb_code, pdb_code + ".pdb") :
 		for chain in model:
 			poly = Polypeptide.Polypeptide(chain)
-			phi_temp = [math.degrees(x[0]) for x in poly.get_phi_psi_list() if None not in x]
-			psi_temp = [math.degrees(x[1]) for x in poly.get_phi_psi_list() if None not in x]
-			phis += phi_temp
-			psis += psi_temp
+			phis += [math.degrees(x[0]) for x in poly.get_phi_psi_list() if None not in x]
+			psis += [math.degrees(x[1]) for x in poly.get_phi_psi_list() if None not in x]
 	return phis, psis
 
 def plot(phis, psis, densities):
@@ -42,7 +38,6 @@ def plot(phis, psis, densities):
 	ax.clabel(cs)
 	ax.set_xlabel("Φ")
 	ax.set_ylabel("Ψ")
-	#ax.contour(densities)
 	plt.show()
 
 parser = argparse.ArgumentParser(description='Input options to generate ramachandran plot')
